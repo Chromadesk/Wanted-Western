@@ -9,12 +9,22 @@ local playerDataPostmanRE = replicatedStorageService.PlayerDataPostmanRE
 local rotationTime = 10 * 60
 local scoreboardDisplayTime = 20
 
-function applyGlassScript(map: Model)
+function applyScripts(map: Model)
 	for _,v in pairs(map:GetDescendants()) do
 		if v.Name == "Glass" then
 			local gScript = script.GlassScript:Clone()
 			gScript.Parent = v
 			gScript.Enabled = true
+		end
+		if v.Name == "SpawnLocation" then
+			local sScript = script.SpawnLocationScript:Clone()
+			sScript.Parent = v
+			sScript.Enabled = true
+		end
+		if v.Name == "Piano" then
+			local pScript = script.PianoScript:Clone()
+			pScript.Parent = v
+			pScript.Enabled = true
 		end
 	end
 end
@@ -27,7 +37,7 @@ function selectMap()
 	replicatedStorageService.MapTimeRemaining.Value = rotationTime
 	map.Name = "Map"
 	map.Parent = workspace
-	applyGlassScript(map)
+	applyScripts(map)
 end
 
 function distributePlayerData()
