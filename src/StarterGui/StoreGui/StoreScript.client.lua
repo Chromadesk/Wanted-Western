@@ -65,6 +65,7 @@ function displayItems()
 
 		viewportCamera.CFrame = CFrame.new(Vector3.new(0, itemClone.Handle.Position.Y -2, -2), Vector3.new(0, 0, 0))
 
+		
 		icon.Parent = Menu
 	end
 end
