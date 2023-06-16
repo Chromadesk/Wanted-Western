@@ -10,7 +10,6 @@ local debounce = false
 
 melee.MeleeHitbox.Touched:Connect(
 	function(toucher)
-		print(toucher)
 		if not toucher or debounce then return end
 		for i,v in ipairs(character:GetDescendants()) do
 			if toucher == v then return end

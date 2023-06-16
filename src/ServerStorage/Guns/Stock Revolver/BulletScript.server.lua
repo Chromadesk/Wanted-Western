@@ -1,3 +1,4 @@
+--ROJO: The Guns, Melees, Accessories, and Decks folders are in ReplicatedStorage.
 --Spawn & fire bullets
 --Control bullet collisions (bullet v player, bullet v accessory, bullet v bullet, bullet v part)
 

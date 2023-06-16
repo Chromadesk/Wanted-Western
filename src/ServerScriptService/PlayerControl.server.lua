@@ -10,7 +10,7 @@ local playerService = game:GetService("Players")
 local teamService = game:GetService("Teams")
 
 local function equipWeapon(weaponName, category, character)
-	local newWeapon =  game:GetService("ServerStorage")[category]:WaitForChild(weaponName):Clone()
+	local newWeapon =  game:GetService("ReplicatedStorage")[category]:WaitForChild(weaponName):Clone()
 
 	character:WaitForChild("HumanoidRootPart").Transparency = 1
 	newWeapon.Parent = workspace
@@ -21,7 +21,7 @@ local function equipWeapon(weaponName, category, character)
 end
 
 local function equipAccessory(clothingName, category, character)
-	local clothingModelClone = game:GetService("ServerStorage").Accessories[category]:WaitForChild(clothingName):Clone()
+	local clothingModelClone = game:GetService("ReplicatedStorage").Accessories[category]:WaitForChild(clothingName):Clone()
 
 	for _,v in pairs(clothingModelClone:GetChildren()) do
 		if v.Name == "Stats" then v:Destroy() else
