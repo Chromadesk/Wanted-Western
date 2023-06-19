@@ -50,7 +50,7 @@ local viewportCamera = Instance.new("Camera")
 end
 
 function displayMainItem(item)
-
+	print("test")
 end
 
 --TODO make master function that calls this
