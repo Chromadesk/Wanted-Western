@@ -9,6 +9,7 @@ local ExitButton = InnerFrame:WaitForChild("ExitButton")
 local Menu = InnerFrame:WaitForChild("Menu")
 local Card1 = InnerFrame:WaitForChild("Card1")
 local CategoryName = InnerFrame:WaitForChild("Category"):WaitForChild("CategoryName")
+local selectedItem = nil
 
 --Top Right
 local TopRight = InnerFrame:WaitForChild("TopRight")
@@ -65,9 +66,15 @@ function displayMainItem(item)
 	RangeText.Text = item.Stats.Range.Value
 	TRItemName.Text = item.Name
 	TRPrice.Text = item.Stats.Cost.Value
+
+	selectedItem = item
 end
 
 function displayItems()
+	print("See DisplayItems line 74")
+	--TODO Move all weapons from Guns & Melees to one Weapons folder.
+	--TODO Update everything to make all items equip from the player's inventory not from hard code.
+
 	local items
 	game:GetService("ReplicatedStorage").WeaponsRE:FireServer()
 	game:GetService("ReplicatedStorage").WeaponsRE.OnClientEvent:Connect(function(guns, melees)
@@ -90,14 +97,16 @@ function displayItems()
 		icon.Parent = Menu
 		icon.Visible = true
 	end
+
+	BuyButton.MouseButton1Click:Connect(function()
+		if not selectedItem then return end
+		player.Inventory[selectedItem.Stats.Category.Value].Value = selectedItem.Name
+		print(player.Inventory[selectedItem.Stats.Category.Value].Value)
+	end)
 end
 
 displayItems()
 
 ExitButton.MouseButton1Click:Connect(function()
 	StoreGui.Enabled = false
-end)
-
-BuyButton.MouseButton1Click:Connect(function()
-	
 end)

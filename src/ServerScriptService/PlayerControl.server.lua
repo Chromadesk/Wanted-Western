@@ -25,7 +25,6 @@ local function equipAccessory(clothingName, category, character)
 
 	for _,v in pairs(clothingModelClone:GetChildren()) do
 		if v.Name == "Stats" then v:Destroy() else
-			print(v.Name)
 			v.Parent = workspace
 			v.Parent = character
 		end
