@@ -71,37 +71,26 @@ function displayMainItem(item)
 end
 
 function displayItems()
-	print("See DisplayItems line 74")
-	--TODO Move all weapons from Guns & Melees to one Weapons folder.
-	--TODO Update everything to make all items equip from the player's inventory not from hard code.
-
 	local items
 	game:GetService("ReplicatedStorage").WeaponsRE:FireServer()
-	game:GetService("ReplicatedStorage").WeaponsRE.OnClientEvent:Connect(function(guns, melees)
-		print(guns)
-		print(melees)
-		items = TableConcat(guns, melees)
-		print(items)
+	game:GetService("ReplicatedStorage").WeaponsRE.OnClientEvent:Connect(function(items)
+		for _,v in pairs(items) do
+			local icon = IconTemplate:Clone()
+			icon.ItemName.Value = v.Name
+			icon.Cost.Text = "$" ..v.Stats.Cost.Value --TODO Install same number formatting code in bounty script to here
+			icon.Title.Text = v.Name
+			setupViewportFrame(v, icon.ViewportFrame)
+
+			icon.MouseButton1Click:Connect(function() displayMainItem(v) end)
+
+			icon.Parent = Menu
+			icon.Visible = true
+		end
 	end)
-	repeat wait() until items
-
-	for _,v in pairs(items) do
-		local icon = IconTemplate:Clone()
-		icon.ItemName.Value = v.Name
-		icon.Cost.Text = "$" ..v.Stats.Cost.Value --TODO Install same number formatting code in bounty script to here
-		icon.Title.Text = v.Name
-		setupViewportFrame(v, icon.ViewportFrame)
-
-		icon.MouseButton1Click:Connect(function() displayMainItem(v) end)
-
-		icon.Parent = Menu
-		icon.Visible = true
-	end
 
 	BuyButton.MouseButton1Click:Connect(function()
 		if not selectedItem then return end
-		player.Inventory[selectedItem.Stats.Category.Value].Value = selectedItem.Name
-		print(player.Inventory[selectedItem.Stats.Category.Value].Value)
+		game:GetService("ReplicatedStorage").SelectedItemRE:FireServer(selectedItem)
 	end)
 end
 

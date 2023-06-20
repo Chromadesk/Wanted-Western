@@ -21,22 +21,22 @@ PlayerService.PlayerAdded:Connect(function(player)
 	
 	local activeWeapon = Instance.new("StringValue")
 	activeWeapon.Name = "ActiveWeapon"
-	activeWeapon.Value = "Stock Revolver,Guns"
+	activeWeapon.Value = "Stock Revolver"
 	activeWeapon.Parent = playerInv
 	
 	local activeFootwear = Instance.new("StringValue")
 	activeFootwear.Name = "ActiveFootwear"
-	activeFootwear.Value = "Cowboy Boots,Footwear"
+	activeFootwear.Value = "Cowboy Boots"
 	activeFootwear.Parent = playerInv
 	
 	local activeHair = Instance.new("StringValue")
 	activeHair.Name = "ActiveHair"
-	activeHair.Value = "Shorthair,Hair"
+	activeHair.Value = "Shorthair"
 	activeHair.Parent = playerInv
 	
 	local activeHeadwear = Instance.new("StringValue")
 	activeHeadwear.Name = "ActiveHeadwear"
-	activeHeadwear.Value = "Cowboy Hat,Headwear"
+	activeHeadwear.Value = "Cowboy Hat"
 	activeHeadwear.Parent = playerInv
 	
 	local activeJacket = Instance.new("StringValue")
@@ -46,12 +46,12 @@ PlayerService.PlayerAdded:Connect(function(player)
 	
 	local activePants = Instance.new("StringValue")
 	activePants.Name = "ActivePants"
-	activePants.Value = "Jeans,Pants"
+	activePants.Value = "Jeans"
 	activePants.Parent = playerInv
 	
 	local activeShirt = Instance.new("StringValue")
 	activeShirt.Name = "ActiveShirt"
-	activeShirt.Value = "Flannel Shirt,Shirt"
+	activeShirt.Value = "Flannel Shirt"
 	activeShirt.Parent = playerInv
 	
 	local activeExtra1 = Instance.new("StringValue")
@@ -77,11 +77,18 @@ PlayerService.PlayerAdded:Connect(function(player)
 			return default
 		end
 		totalMoney.Value = corruptionDefault(invData["TotalMoney"], 0)
-		activeWeapon.Value = corruptionDefault(invData["ActiveWeapon"], "Stock Revolver,Guns")
+		activeWeapon.Value = corruptionDefault(invData["ActiveWeapon"], "Stock Revolver")
+		activeFootwear.Value = corruptionDefault(invData["ActiveFootwear"], "Cowboy Boots")
+		activeHair.Value = corruptionDefault(invData["ActiveHair"], "Shorthair")
+		activeHeadwear.Value = corruptionDefault(invData["ActiveHeadwear"], "Cowboy Hat")
+		activeJacket.Value = corruptionDefault(invData["ActiveJacket"], "")
+		activePants.Value = corruptionDefault(invData["ActivePants"], "Jeans")
+		activeShirt.Value = corruptionDefault(invData["ActiveShirt"], "Flannel Shirt")
+		activeExtra1.Value = corruptionDefault(invData["ActiveExtra1"], "")
+		activeExtra2.Value = corruptionDefault(invData["ActiveExtra2"], "")
+		activeExtra3.Value = corruptionDefault(invData["ActiveExtra3"], "")
 		print("Loaded data: UserId " ..player.UserId)
 	else
-		totalMoney.Value = 0
-		activeWeapon.Value = "Stock Revolver,Guns"
 		print("New player: UserId " ..player.UserId)
 	end
 end)
@@ -90,6 +97,15 @@ PlayerService.PlayerRemoving:Connect(function(player)
 	local savePackage = {
 		TotalMoney = player.Inventory.TotalMoney.Value,
 		ActiveWeapon = player.Inventory.ActiveWeapon.Value,
+		ActiveFootwear = player.Inventory.ActiveFootwear.Value,
+		ActiveHair = player.Inventory.ActiveHair.Value,
+		ActiveHeadwear = player.Inventory.ActiveHeadwear.Value,
+		ActiveJacket = player.Inventory.ActiveJacket.Value,
+		ActivePants = player.Inventory.ActivePants.Value,
+		ActiveShirt = player.Inventory.ActiveShirt.Value,
+		ActiveExtra1 = player.Inventory.ActiveExtra1.Value,
+		ActiveExtra2 = player.Inventory.ActiveExtra2.Value,
+		ActiveExtra3 = player.Inventory.ActiveExtra3.Value
 	}
 	local success, errMessage = pcall(function()
 		inventoryStore:SetAsync(player.UserId, savePackage)
