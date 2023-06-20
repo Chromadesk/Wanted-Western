@@ -1,3 +1,4 @@
+--TODO Add sounds for clicking on stuff
 local ServerStorage = game:GetService("ServerStorage")
 local player = game:GetService("Players").LocalPlayer
 
@@ -7,7 +8,6 @@ local NPCImage = InnerFrame:WaitForChild("NPCImage")
 local ExitButton = InnerFrame:WaitForChild("ExitButton")
 local Menu = InnerFrame:WaitForChild("Menu")
 local Card1 = InnerFrame:WaitForChild("Card1")
-local Card2 = InnerFrame:WaitForChild("Card2")
 local CategoryName = InnerFrame:WaitForChild("Category"):WaitForChild("CategoryName")
 
 --Top Right
@@ -19,6 +19,8 @@ local AmmoText = TopRight:WaitForChild("Ammo")
 local FirespeedText = TopRight:WaitForChild("Firespeed")
 local ReloadText = TopRight:WaitForChild("Reload")
 local RangeText = TopRight:WaitForChild("Range")
+local TRItemName = TopRight:WaitForChild("ItemName")
+local TRPrice = TopRight:WaitForChild("Price")
 
 --Icon Template
 local IconTemplate = StoreGui:WaitForChild("Icon")
@@ -31,29 +33,40 @@ function TableConcat(t1,t2)
 end
 
 function setupViewportFrame(item, viewportFrame)
-local viewportCamera = Instance.new("Camera")
-		viewportCamera.Name = "ViewportCamera"
-		viewportFrame.CurrentCamera = viewportCamera
-		viewportCamera.Parent = workspace
-
-		local itemClone = item:Clone()
-		for _,v in pairs(itemClone:GetChildren()) do --SKIN IT!!! same as skin him, finds scripts and removes them
-			if not v:IsA("Part") and not v:IsA("Model") and not v:IsA("Folder") then v:Destroy() end
-		end
-		itemClone.Name = itemClone.Name .. "Dummy"
-		itemClone.Parent = workspace
-		itemClone.Model:MoveTo(Vector3.new(0, 0, 0))
-		itemClone.Parent = viewportFrame
-
-		local CamPart = itemClone.Model.CamPart
-		viewportCamera.CFrame = CFrame.new(Vector3.new(CamPart.Position.X -2, CamPart.Position.Y, CamPart.Position.Z), CamPart.Position) 
+	local viewportCamera = Instance.new("Camera")
+	viewportCamera.Name = "ViewportCamera"
+	viewportFrame.CurrentCamera = viewportCamera
+	viewportCamera.Parent = workspace
+	
+	local itemClone = item:Clone()
+	for _,v in pairs(itemClone:GetChildren()) do --SKIN IT!!! same as skin him, finds scripts and removes them
+		if not v:IsA("Part") and not v:IsA("Model") and not v:IsA("Folder") then v:Destroy() end
+	end
+	local CamPart = itemClone.Model.CamPart
+	itemClone.Name = itemClone.Name .. "Dummy"
+	itemClone.Parent = workspace
+	itemClone.Model:PivotTo(CFrame.new(0, 0, 0) * CFrame.Angles(0, 90, 0))
+	
+	itemClone.Parent = viewportFrame
+	
+	viewportCamera.CFrame = CFrame.new(Vector3.new(CamPart.Position.X -2, CamPart.Position.Y, CamPart.Position.Z), CamPart.Position) 
 end
 
 function displayMainItem(item)
-	print("test")
+	for _,v in pairs(TRViewport:GetChildren()) do
+		v:Destroy()
+	end
+	setupViewportFrame(item, TRViewport)
+
+	DamageText.Text = item.Stats.Damage.Value
+	AmmoText.Text = item.Stats.Ammo.Value
+	FirespeedText.Text = item.Stats.Firespeed.Value
+	ReloadText.Text = item.Stats.ReloadTime.Value
+	RangeText.Text = item.Stats.Range.Value
+	TRItemName.Text = item.Name
+	TRPrice.Text = item.Stats.Cost.Value
 end
 
---TODO make master function that calls this
 function displayItems()
 	local items
 	game:GetService("ReplicatedStorage").WeaponsRE:FireServer()
@@ -80,3 +93,11 @@ function displayItems()
 end
 
 displayItems()
+
+ExitButton.MouseButton1Click:Connect(function()
+	StoreGui.Enabled = false
+end)
+
+BuyButton.MouseButton1Click:Connect(function()
+	
+end)
