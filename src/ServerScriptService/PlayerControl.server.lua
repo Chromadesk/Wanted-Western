@@ -34,7 +34,6 @@ end
 --TODO There's a better way to do this.
 local function loadPlayerItems(player, character)
 	local inventory = player.Inventory
-	print(inventory.ActiveWeapon.Value)
 	equipWeapon(inventory.ActiveWeapon.Value, character)
 	equipAccessory(inventory.ActiveFootwear.Value, "Footwear", character)
 	equipAccessory(inventory.ActiveHair.Value, "Hair", character)
@@ -51,7 +50,6 @@ end
 --TODO The better way is to loop through every inventory item variable and use a combined version of equipWeapon
 --and equipAccessory to set each slot's item.
 local function activatePlayerItemReload(player, character)
-	print("activateplayerreload")
 	local inventory = player.Inventory
 	inventory.ActiveWeapon.Changed:Connect(function() equipWeapon(inventory.ActiveWeapon.Value, character) end)
 	inventory.ActiveFootwear.Changed:Connect(function() equipAccessory(inventory.ActiveFootwear.Value, "Footwear", character) end)
