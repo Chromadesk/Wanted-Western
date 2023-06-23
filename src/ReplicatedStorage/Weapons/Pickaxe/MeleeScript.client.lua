@@ -56,6 +56,7 @@ character:WaitForChild("Animations").Move.AnimationId = moveAnimation.AnimationI
 local attackTrack = character.Humanoid:LoadAnimation(attackAnimation) -- 1 second
 
 local function fireMelee()
+	print("fireMelee()")
 	melee.FireRE:FireServer(damage, firespeed)
 	attackTrack:Play(nil,nil,1 / firespeed)
 	wait(firespeed)

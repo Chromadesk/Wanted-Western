@@ -10,6 +10,7 @@ local debounce = false
 
 melee.MeleeHitbox.Touched:Connect(
 	function(toucher)
+		print(toucher)
 		if not toucher or debounce then return end
 		for i,v in ipairs(character:GetDescendants()) do
 			if toucher == v then return end
@@ -30,6 +31,7 @@ melee.MeleeHitbox.Touched:Connect(
 			toucher.Parent and toucher.Name == "Snake Oil Spawn"
 		then return end
 		
+		print("disabling hitbox on melee")
 		debounce = true
 		melee.MeleeHitbox.CanTouch = false
 	end)
@@ -40,7 +42,9 @@ function activateHitbox(player, damage, fireSpeed)
 	melee.Handle.Firesound:Play()
 	debounce = false
 	melee.MeleeHitbox.CanTouch = true
-	wait(0.1)
+	print("yes touch")
+	wait(0.2)
+	print("no touch")
 	melee.MeleeHitbox.CanTouch = false
 end
 
@@ -50,5 +54,6 @@ melee.FireRE.OnServerEvent:Connect(
 		damage = b
 		fireSpeed = c
 		character = workspace:WaitForChild(player.Name)
+		print("clicked")
 		activateHitbox(player, damage, fireSpeed)
 	end)

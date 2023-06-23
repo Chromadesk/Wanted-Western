@@ -14,5 +14,10 @@ joinButton.MouseButton1Click:Connect(function()
 end)
 
 storeButton.MouseButton1Click:Connect(function()
-	starterGUI:WaitForChild("StoreGui").Enabled = true
+	local StoreGui = starterGUI:WaitForChild("StoreGui")
+	if StoreGui.Enabled then
+		StoreGui.Enabled = false
+	else
+		StoreGui.Enabled = true
+	end
 end)
